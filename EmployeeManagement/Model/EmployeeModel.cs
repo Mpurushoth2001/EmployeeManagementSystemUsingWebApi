@@ -10,10 +10,10 @@ namespace EmployeeManagement.Model
         public int EmpId { get; set; }
         public string Name { get; set; }
         
-        [Display(Name ="LastName")]
-        public string Lastname { get; set; }
+        [Display(Name ="Last Name")]
+        public string? Lastname { get; set; }
         public char Sex { get; set;}
-        [Display(Name = "DateOfBirth")]
+        [Display(Name = "Date Of Birth")]
         public DateTime DOB { get; set; }
         public string Designation { get; set; }
     }

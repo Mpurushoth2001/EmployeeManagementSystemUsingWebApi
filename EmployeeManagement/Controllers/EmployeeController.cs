@@ -16,12 +16,12 @@ namespace EmployeeManagement.Controllers
         /// <summary>
         /// Employee Create
         /// </summary>
-        /// <param name="emp"></param>
+        /// <param name="Create"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<IActionResult> Create(CreateEmployee emp) 
+        public async Task<IActionResult> Create(CreateEmployee Create) 
         {
-            return Ok(await _mediator.Send(emp));
+            return Ok(await _mediator.Send(Create));
         }
 
         /// <summary>
@@ -42,11 +42,16 @@ namespace EmployeeManagement.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         
-        [HttpDelete("{id}")]
+        [HttpDelete("{ID}")]
         public async Task<IActionResult> Delete(int id)
         {
             return Ok(await _mediator.Send(new DeleteEmployee { EmpId=id}));
         }
+
+        /// <summary>
+        /// Get All The Employee Records
+        /// </summary>
+        /// <returns></returns>
 
         [HttpGet]
         public async Task<IActionResult> GetAll()
@@ -54,10 +59,16 @@ namespace EmployeeManagement.Controllers
             return Ok(await _mediator.Send(new GetEmployee()));
         }
 
-        [HttpGet("{id}")]
+        /// <summary>
+        /// Get An Employee Record By Mentioning ID
+        /// </summary>
+        /// <param name="ID"></param>
+        /// <returns></returns>
+
+        [HttpGet("{ID}")]
         public async Task<IActionResult> GetByID(int ID)
         {
-            return Ok(await _mediator.Send(new GetEmployeeByID()));
+            return Ok(await _mediator.Send(new GetEmployeeByID {EmpID=ID}));
         }
     }
 }
