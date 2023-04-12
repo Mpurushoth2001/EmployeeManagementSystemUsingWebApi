@@ -1,5 +1,10 @@
 ﻿using EmployeeManagement.CQRS.Command;
+using EmployeeManagement.CQRS.Command.Create;
+using EmployeeManagement.CQRS.Command.Delete;
+using EmployeeManagement.CQRS.Command.Update;
 using EmployeeManagement.CQRS.Query;
+using EmployeeManagement.CQRS.Query.Get;
+using EmployeeManagement.CQRS.Query.GetById;
 using EmployeeManagement.Model;
 using MediatR;
 using Microsoft.AspNetCore.Http;
@@ -31,6 +36,7 @@ namespace EmployeeManagement.Controllers
         /// <returns></returns>
 
         [HttpPut]
+
         public async Task<IActionResult> Update(UpdateEmployee update)
         {
             return Ok(await _mediator.Send(update));

@@ -16,5 +16,6 @@ namespace EmployeeManagement.Model
         [Display(Name = "Date Of Birth")]
         public DateTime DOB { get; set; }
         public string Designation { get; set; }
+        
     }
 }
