@@ -1,23 +1,22 @@
-﻿using EmployeeManagement.Model;
+﻿using EmployeeManagement.Validator;
 using FluentValidation;
 using System.Text.RegularExpressions;
 
-namespace EmployeeManagement.Validator
+namespace EmployeeManagement.Modules.EmployeeManagement.Command.Create
 {
-
-    public class EmployeeValidator : AbstractValidator<EmployeeModel>
+    public class CreateEmployeeValidator : AbstractValidator<CreateEmployee>
     {
-        public EmployeeValidator()
+        public CreateEmployeeValidator()
         {
-            RuleFor(x => x.Name).Cascade(CascadeMode.StopOnFirstFailure)
+            RuleFor(x => x.FirstName).Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage("{PropertyName} is empty")
-                .Length(3, 40).WithMessage("{PropertyName} must contain valid Name")
-                .SetValidator(new NameValidator());
+                .Length(3, 20).WithMessage("{PropertyName} must contain valid Name")
+                .SetValidator(new NameValidator()).WithMessage("{PropertyName} should be Letters");
 
             RuleFor(x => x.Lastname).SetValidator(new NameValidator())
                 .When(y => !string.IsNullOrEmpty(y.Lastname));
 
-            RuleFor(x => x.Sex).Cascade(CascadeMode.StopOnFirstFailure)
+            RuleFor(x => x.Gender).Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage("The Field is empty")
                 .SetValidator(new GenderValidator())
                 .SetValidator(new NameValidator());
@@ -29,14 +28,12 @@ namespace EmployeeManagement.Validator
                 .Length(3, 25)
                 .SetValidator(new NameValidator());
         }
-
-
         protected bool BeAValidAge(DateTime date)
         {
             int currentYear = DateTime.Now.Year;
             int dobYear = date.Year;
 
-            if (dobYear <= currentYear && dobYear > (currentYear - 120))
+            if (dobYear <= currentYear && dobYear > currentYear - 120)
             {
                 return true;
             }

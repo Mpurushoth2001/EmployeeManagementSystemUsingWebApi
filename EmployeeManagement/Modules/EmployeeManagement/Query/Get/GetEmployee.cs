@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace EmployeeManagement.CQRS.Query.Get
+namespace EmployeeManagement.Modules.EmployeeManagement.Query.Get
 {
     public class GetEmployee : IRequest<IEnumerable<EmployeeModel>>
     {
@@ -13,11 +13,14 @@ namespace EmployeeManagement.CQRS.Query.Get
             public async Task<IEnumerable<EmployeeModel>> Handle(GetEmployee query, CancellationToken cancellationToken)
             {
                 var employee = await _context.Employees.ToListAsync();
-                if (employee == null)
+                if (employee != null)
                 {
-                    return null;
+                    return employee.AsReadOnly();
                 }
-                return employee.AsReadOnly();
+                else
+                {
+                    throw new NullReferenceException("Invalid Entity");
+                }
             }
         }
     }

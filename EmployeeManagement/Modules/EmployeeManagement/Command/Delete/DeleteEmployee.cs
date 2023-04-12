@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace EmployeeManagement.CQRS.Command.Delete
+namespace EmployeeManagement.Modules.EmployeeManagement.Command.Delete
 {
     public class DeleteEmployee : IRequest<string>
     {
@@ -16,11 +16,17 @@ namespace EmployeeManagement.CQRS.Command.Delete
                 var employees = await _context.Employees.Where(a => a.EmpId == command.EmpId).FirstOrDefaultAsync();
 
 
-                if (employees == null) return null;
-                _context.Employees.Remove(employees);
-                await _context.SaveChangesAsync();
-                string output = "Record is Deleted";
-                return output;
+                if (employees != null) 
+                {
+                    _context.Employees.Remove(employees);
+                    await _context.SaveChangesAsync();
+                    string output = "Record is Deleted";
+                    return output;
+                }
+                else
+                {
+                    throw new Exception("Invalid Employee ID");
+                }
             }
         }
     }

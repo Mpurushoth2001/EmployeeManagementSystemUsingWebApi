@@ -1,4 +1,4 @@
-﻿namespace EmployeeManagement.CQRS
+﻿namespace EmployeeManagement.Modules.EmployeeManagement
 {
     public class EntityResponse
     {

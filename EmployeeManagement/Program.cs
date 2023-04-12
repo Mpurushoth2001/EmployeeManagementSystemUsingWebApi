@@ -1,4 +1,6 @@
 using EmployeeManagement.Model;
+using EmployeeManagement.Validator;
+using FluentValidation;
 using FluentValidation.AspNetCore;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -18,9 +20,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
-builder.Services.AddFluentValidation(s => { s.RegisterValidatorsFromAssemblyContaining<Program>(); }) ;
+builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
+//builder.Services.AddFluentValidation(s => { s.RegisterValidatorsFromAssemblyContaining<Program>(); }) ;
 builder.Services.AddDbContext<EmployeeDbcontext>
     (option => option.UseSqlServer(builder.Configuration.GetConnectionString("TestDb")));
+builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
 var app = builder.Build();
 

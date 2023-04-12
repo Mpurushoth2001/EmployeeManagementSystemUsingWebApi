@@ -2,7 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
-namespace EmployeeManagement.CQRS.Query.GetById
+namespace EmployeeManagement.Modules.EmployeeManagement.Query.GetById
 {
     public class GetEmployeeByID : IRequest<EmployeeModel>
     {
@@ -15,9 +15,14 @@ namespace EmployeeManagement.CQRS.Query.GetById
             public async Task<EmployeeModel> Handle(GetEmployeeByID query, CancellationToken cancellationToken)
             {
                 var employees = _context.Employees.Where(a => a.EmpId == query.EmpID).FirstOrDefault();
-                if (employees == null) return null;
-                return employees;
-
+                if (employees != null)
+                {
+                    return employees;
+                }
+                else
+                {
+                    throw new NullReferenceException("Invalid Employee ID");
+                }
             }
         }
     }

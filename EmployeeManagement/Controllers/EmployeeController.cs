@@ -1,19 +1,19 @@
-﻿using EmployeeManagement.CQRS.Command;
-using EmployeeManagement.CQRS.Command.Create;
-using EmployeeManagement.CQRS.Command.Delete;
-using EmployeeManagement.CQRS.Command.Update;
-using EmployeeManagement.CQRS.Query;
-using EmployeeManagement.CQRS.Query.Get;
-using EmployeeManagement.CQRS.Query.GetById;
-using EmployeeManagement.Model;
+﻿using EmployeeManagement.Modules.EmployeeManagement.Command.Create;
+using EmployeeManagement.Modules.EmployeeManagement.Command.Delete;
+using EmployeeManagement.Modules.EmployeeManagement.Command.Update;
+using EmployeeManagement.Modules.EmployeeManagement.Query.Get;
+using EmployeeManagement.Modules.EmployeeManagement.Query.GetById;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Swashbuckle.AspNetCore.Annotations;
 
 namespace EmployeeManagement.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [SwaggerTag]
+    [ApiVersion("1")]
     public class EmployeeController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -48,10 +48,10 @@ namespace EmployeeManagement.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         
-        [HttpDelete("{ID}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpDelete]
+        public async Task<IActionResult> Delete(int ID)
         {
-            return Ok(await _mediator.Send(new DeleteEmployee { EmpId=id}));
+            return Ok(await _mediator.Send(new DeleteEmployee { EmpId=ID}));
         }
 
         /// <summary>
@@ -71,7 +71,8 @@ namespace EmployeeManagement.Controllers
         /// <param name="ID"></param>
         /// <returns></returns>
 
-        [HttpGet("{ID}")]
+        [HttpGet("{id}")]
+        
         public async Task<IActionResult> GetByID(int ID)
         {
             return Ok(await _mediator.Send(new GetEmployeeByID {EmpID=ID}));

@@ -2,13 +2,13 @@
 using MediatR;
 using System.ComponentModel.DataAnnotations;
 
-namespace EmployeeManagement.CQRS.Command.Create
+namespace EmployeeManagement.Modules.EmployeeManagement.Command.Create
 {
     public class CreateEmployee : IRequest<string>
     {
-        public string Name { get; set; }
+        public string FirstName { get; set; }
         public string Lastname { get; set; }
-        public char Sex { get; set; }
+        public char Gender { get; set; }
         public DateTime DOB { get; set; }
         public string Designation { get; set; }
         public class CreateEmployeeHandler : IRequestHandler<CreateEmployee, string>
@@ -20,9 +20,9 @@ namespace EmployeeManagement.CQRS.Command.Create
                 try
                 {
                     var employees = new EmployeeModel();
-                    employees.Name = command.Name;
+                    employees.Name = command.FirstName;
                     employees.Lastname = command.Lastname;
-                    employees.Sex = command.Sex;
+                    employees.Sex = command.Gender;
                     employees.DOB = command.DOB;
                     employees.Designation = command.Designation;
                     _context.Employees.Add(employees);
