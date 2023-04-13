@@ -15,6 +15,7 @@ namespace EmployeeManagement.Modules.EmployeeManagement.Query.GetById
             public async Task<EmployeeModel> Handle(GetEmployeeByID query, CancellationToken cancellationToken)
             {
                 var employees = _context.Employees.Where(a => a.EmpId == query.EmpID).FirstOrDefault();
+                //Fetch Employee Details By Id 
                 if (employees != null)
                 {
                     return employees;

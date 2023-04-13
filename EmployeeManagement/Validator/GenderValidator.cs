@@ -4,7 +4,7 @@ namespace EmployeeManagement.Validator
 {
     public class GenderValidator : PropertyValidator
     {
-        public GenderValidator() : base("WhiteSpace,Digits and Special Characters are Not Valid")
+        public GenderValidator() : base("Invalid Entity")
         {
         }
         protected override bool IsValid(PropertyValidatorContext context)

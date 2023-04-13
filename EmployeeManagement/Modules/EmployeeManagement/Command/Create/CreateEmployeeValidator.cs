@@ -11,34 +11,22 @@ namespace EmployeeManagement.Modules.EmployeeManagement.Command.Create
             RuleFor(x => x.FirstName).Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage("{PropertyName} is empty")
                 .Length(3, 20).WithMessage("{PropertyName} must contain valid Name")
-                .SetValidator(new NameValidator()).WithMessage("{PropertyName} should be Letters");
+                .SetValidator(new NameValidator());
 
             RuleFor(x => x.Lastname).SetValidator(new NameValidator())
                 .When(y => !string.IsNullOrEmpty(y.Lastname));
 
             RuleFor(x => x.Gender).Cascade(CascadeMode.StopOnFirstFailure)
-                .NotEmpty().WithMessage("The Field is empty")
-                .SetValidator(new GenderValidator())
-                .SetValidator(new NameValidator());
+                .NotNull().WithMessage("The Field is empty")
+                .SetValidator(new GenderValidator());
 
-            RuleFor(x => x.DOB).NotEmpty().NotNull().Must(BeAValidAge).WithMessage("Invalid Date Of Birth");
+            RuleFor(x => x.DOB).NotEmpty().NotNull().SetValidator(new DateOfBirthValitator());
 
             RuleFor(x => x.Designation).Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage("The Field is empty")
                 .Length(3, 25)
-                .SetValidator(new NameValidator());
+                .SetValidator(new DesignationValidator());
         }
-        protected bool BeAValidAge(DateTime date)
-        {
-            int currentYear = DateTime.Now.Year;
-            int dobYear = date.Year;
 
-            if (dobYear <= currentYear && dobYear > currentYear - 120)
-            {
-                return true;
-            }
-
-            return false;
-        }
     }
 }

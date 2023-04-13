@@ -1,6 +1,7 @@
 ﻿using EmployeeManagement.Model;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using static EmployeeManagement.Model.ExceptionModel;
 
 namespace EmployeeManagement.Modules.EmployeeManagement.Query.Get
 {
@@ -13,13 +14,19 @@ namespace EmployeeManagement.Modules.EmployeeManagement.Query.Get
             public async Task<IEnumerable<EmployeeModel>> Handle(GetEmployee query, CancellationToken cancellationToken)
             {
                 var employee = await _context.Employees.ToListAsync();
-                if (employee != null)
+                //Fetch Employee Details If Employee Table(Database) Is Not Empty.
+                if (employee.Count != 0)
                 {
                     return employee.AsReadOnly();
                 }
                 else
                 {
-                    throw new NullReferenceException("Invalid Entity");
+                    ExceptionModel exception = new ExceptionModel();
+                    exception.Code = 500;
+                    exception.Information = "Table is empty";
+
+                    //return exception;
+                    throw new EmployeeNotFoundException();
                 }
             }
         }

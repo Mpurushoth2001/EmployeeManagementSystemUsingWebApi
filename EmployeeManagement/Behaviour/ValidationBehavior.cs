@@ -1,7 +1,8 @@
 ﻿using FluentValidation;
 using MediatR;
+using Microsoft.Identity.Client;
 
-namespace EmployeeManagement.Validator
+namespace EmployeeManagement.Behaviour
 {
     public class ValidationBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
         where TRequest : IRequest<TResponse>
@@ -25,7 +26,7 @@ namespace EmployeeManagement.Validator
 
             if (failures.Count != 0)
             {
-                throw new ValidationException(failures);
+                throw new ValidationException(failures);                
             }
 
             return next();

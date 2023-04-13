@@ -5,18 +5,29 @@ namespace EmployeeManagement.Validator
 {
     public class NameValidator : PropertyValidator
     {
-        public NameValidator() : base("WhiteSpace,Digits and Special Characters are Not Valid") { }
+        public NameValidator() : base("{PropertyName} should be Letters") { }
         protected override bool IsValid(PropertyValidatorContext contect)
         {
-            Regex regex = new Regex(@"[\p{L} ]+$", RegexOptions.IgnoreCase);
+            string name = (string)contect.PropertyValue;
+            Regex regex = new Regex(@"^[a-z]+$", RegexOptions.IgnoreCase);
             if (contect.PropertyValue != null)
             {
-                return regex.IsMatch(contect.PropertyName);
+                return regex.IsMatch(name);
             }
             else
             {
                 return false;
             }
+
+            //string data = (string)contect.PropertyValue;
+            //if (contect.PropertyValue != null)
+            //{
+            //    return data.All(char.IsLetter);
+            //}
+            //else
+            //{
+            //    return false;
+            //}
 
         }
     }

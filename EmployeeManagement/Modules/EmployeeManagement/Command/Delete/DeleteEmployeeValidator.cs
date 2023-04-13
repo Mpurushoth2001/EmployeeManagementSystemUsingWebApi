@@ -6,7 +6,7 @@ namespace EmployeeManagement.Modules.EmployeeManagement.Command.Delete
     {
         public DeleteEmployeeValidator()
         {
-            RuleFor(x => x.EmpId).NotEmpty().NotNull().OverridePropertyName("Employee ID");
+            RuleFor(x => x.EmployeeId).NotEmpty().NotNull();
         }
     }
 }

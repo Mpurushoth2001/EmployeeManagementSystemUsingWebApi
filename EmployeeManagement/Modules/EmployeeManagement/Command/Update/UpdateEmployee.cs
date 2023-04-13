@@ -2,41 +2,46 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using static EmployeeManagement.Model.Globals;
 
 namespace EmployeeManagement.Modules.EmployeeManagement.Command.Update
 {
-    public class UpdateEmployee : IRequest<string>
+    public class UpdateEmployee : IRequest<EntityResponse>
     {
-        public int EmpId { get; set; }
+        public int EmployeeId { get; set; }
         public string FirstName { get; set; }
         public string Lastname { get; set; }
         public char Gender { get; set; }
         public DateTime DOB { get; set; }
         public string Designation { get; set; }
 
-        public class UpdateEmployeeHandler : IRequestHandler<UpdateEmployee, string>
+        
+
+        public class UpdateEmployeeHandler : IRequestHandler<UpdateEmployee, EntityResponse>
         {
             private readonly EmployeeDbcontext _context;
             public UpdateEmployeeHandler(EmployeeDbcontext context) => _context = context;
 
-            public async Task<string> Handle(UpdateEmployee command, CancellationToken cancellationToken)
+            public async Task<EntityResponse> Handle(UpdateEmployee command, CancellationToken cancellationToken)
             {
-                var employees = await _context.Employees.Where(a => a.EmpId == command.EmpId).FirstOrDefaultAsync();
-
+                var employees = await _context.Employees.Where(a => a.EmpId == command.EmployeeId).FirstOrDefaultAsync();
+                EntityResponse response=new EntityResponse();
+                //Updates Existing Employee Record 
                 if (employees != null)
                 {
-                    employees.Name = command.FirstName;
+                    employees.FirstName = command.FirstName;
                     employees.Lastname = command.Lastname;
-                    employees.Sex = command.Gender;
+                    employees.Gender = command.Gender;
                     employees.DOB = command.DOB;
                     employees.Designation = command.Designation;
-                    await _context.SaveChangesAsync();
-                    string OutputMessage = "Employee Details Are Updated";
-                    return OutputMessage;
+                    response.ResponseId=await _context.SaveChangesAsync();
+                    response.AdditionalInfo = "1 Row Affected";
+                    response.AdditionalInfo = "Employee Details Are Updated";
+                    return response;
                 }
                 else
                 {
-                    throw new NullReferenceException("Invalid  Employee ID");
+                    throw new Exception("Invalid  Employee ID");
 
                 }
 

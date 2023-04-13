@@ -2,18 +2,17 @@
 using FluentValidation;
 using System.Text.RegularExpressions;
 
-namespace EmployeeManagement.Modules.EmployeeManagement.Command.Update
+namespace EmployeeManagement.Model
 {
-    public class UpdateEmployeeValidator : AbstractValidator<UpdateEmployee>
-    {
-        public UpdateEmployeeValidator()
-        {
-            RuleFor(x => x.EmployeeId).NotEmpty().NotNull().OverridePropertyName("Employee ID");
 
+    public class EmployeeValidator : AbstractValidator<EmployeeModel>
+    {
+        public EmployeeValidator()
+        {
             RuleFor(x => x.FirstName).Cascade(CascadeMode.StopOnFirstFailure)
-                 .NotEmpty().WithMessage("{PropertyName} is empty")
-                 .Length(3, 25).WithMessage("{PropertyName} must contain valid Name")
-                 .SetValidator(new NameValidator());
+                .NotEmpty().WithMessage("{PropertyName} is empty")
+                .Length(3, 40).WithMessage("{PropertyName} must contain valid Name")
+                .SetValidator(new NameValidator());
 
             RuleFor(x => x.Lastname).SetValidator(new NameValidator())
                 .When(y => !string.IsNullOrEmpty(y.Lastname));
@@ -21,7 +20,6 @@ namespace EmployeeManagement.Modules.EmployeeManagement.Command.Update
             RuleFor(x => x.Gender).Cascade(CascadeMode.StopOnFirstFailure)
                 .NotNull().WithMessage("The Field is empty")
                 .SetValidator(new GenderValidator());
-                
 
             RuleFor(x => x.DOB).NotEmpty().NotNull().SetValidator(new DateOfBirthValitator());
 
@@ -29,8 +27,6 @@ namespace EmployeeManagement.Modules.EmployeeManagement.Command.Update
                 .NotEmpty().WithMessage("The Field is empty")
                 .Length(3, 25)
                 .SetValidator(new NameValidator());
-
         }
-        
     }
 }

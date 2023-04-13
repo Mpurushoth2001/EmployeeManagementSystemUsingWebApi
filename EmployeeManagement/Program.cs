@@ -1,10 +1,12 @@
+using EmployeeManagement.Behaviour;
 using EmployeeManagement.Model;
-using EmployeeManagement.Validator;
 using FluentValidation;
 using FluentValidation.AspNetCore;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Serilog;
+using System.ComponentModel.DataAnnotations;
 using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,12 +21,15 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 //builder.Services.AddFluentValidation(s => { s.RegisterValidatorsFromAssemblyContaining<Program>(); }) ;
 builder.Services.AddDbContext<EmployeeDbcontext>
     (option => option.UseSqlServer(builder.Configuration.GetConnectionString("TestDb")));
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
+
 
 var app = builder.Build();
 
