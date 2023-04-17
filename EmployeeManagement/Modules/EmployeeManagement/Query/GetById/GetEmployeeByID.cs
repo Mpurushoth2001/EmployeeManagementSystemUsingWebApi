@@ -1,12 +1,13 @@
 ﻿using EmployeeManagement.Model;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using static EmployeeManagement.Model.ExceptionModel;
 
 namespace EmployeeManagement.Modules.EmployeeManagement.Query.GetById
 {
     public class GetEmployeeByID : IRequest<EmployeeModel>
     {
-        public int EmpID { get; set; }
+        public int EmployeeId { get; set; }
         public class GetEmployeeByIDHandler : IRequestHandler<GetEmployeeByID, EmployeeModel>
         {
             private readonly EmployeeDbcontext _context;
@@ -14,7 +15,7 @@ namespace EmployeeManagement.Modules.EmployeeManagement.Query.GetById
 
             public async Task<EmployeeModel> Handle(GetEmployeeByID query, CancellationToken cancellationToken)
             {
-                var employees = _context.Employees.Where(a => a.EmpId == query.EmpID).FirstOrDefault();
+                var employees = _context.Employees.Where(a => a.EmployeeId == query.EmployeeId).FirstOrDefault();
                 //Fetch Employee Details By Id 
                 if (employees != null)
                 {
@@ -22,7 +23,8 @@ namespace EmployeeManagement.Modules.EmployeeManagement.Query.GetById
                 }
                 else
                 {
-                    throw new NullReferenceException("Invalid Employee ID");
+                    throw new InvalidIDException();
+                    
                 }
             }
         }

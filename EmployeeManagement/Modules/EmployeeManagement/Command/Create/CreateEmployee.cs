@@ -36,7 +36,7 @@ namespace EmployeeManagement.Modules.EmployeeManagement.Command.Create
                     employees.Designation = command.Designation;
                     _context.Employees.Add(employees);
                     await _context.SaveChangesAsync();
-                    response.ResponseId = employees.EmpId;
+                    response.ResponseId = employees.EmployeeId;
                     response.AdditionalInfo= "New Employee Details Added Successfully";
                     return response;
                 }

@@ -1,6 +1,8 @@
-﻿using EmployeeManagement.Model;
+﻿using Azure.Core;
+using EmployeeManagement.Model;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 using static EmployeeManagement.Model.ExceptionModel;
 
 namespace EmployeeManagement.Modules.EmployeeManagement.Query.Get
@@ -15,18 +17,24 @@ namespace EmployeeManagement.Modules.EmployeeManagement.Query.Get
             {
                 var employee = await _context.Employees.ToListAsync();
                 //Fetch Employee Details If Employee Table(Database) Is Not Empty.
-                if (employee.Count != 0)
+                try
                 {
-                    return employee.AsReadOnly();
+                    if (employee.Count != 0)
+                    {
+                        return employee.AsReadOnly();
+                    }
+                    else
+                    {
+                        //return exception;
+                        //throw new EmployeeNotFoundException();
+                        //throw new EmployeeNotFoundException(500);
+                        throw new Exception();
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    ExceptionModel exception = new ExceptionModel();
-                    exception.Code = 500;
-                    exception.Information = "Table is empty";
+                    throw new EmployeeNotFoundException(500);
 
-                    //return exception;
-                    throw new EmployeeNotFoundException();
                 }
             }
         }

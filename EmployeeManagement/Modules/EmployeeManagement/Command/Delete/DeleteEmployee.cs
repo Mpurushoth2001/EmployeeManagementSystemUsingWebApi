@@ -2,6 +2,7 @@
 using EmployeeManagement.Model;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using static EmployeeManagement.Model.ExceptionModel;
 
 namespace EmployeeManagement.Modules.EmployeeManagement.Command.Delete
 {
@@ -14,7 +15,7 @@ namespace EmployeeManagement.Modules.EmployeeManagement.Command.Delete
             public DeleteEmployeeHandler(EmployeeDbcontext context) => _context = context;
             public async Task<EntityResponse> Handle(DeleteEmployee command, CancellationToken cancellationToken)
             {
-                var employees = await _context.Employees.Where(a => a.EmpId == command.EmployeeId).FirstOrDefaultAsync();
+                var employees = await _context.Employees.Where(a => a.EmployeeId == command.EmployeeId).FirstOrDefaultAsync();
                 EntityResponse response=new EntityResponse();
 
                 //Delete Employee Record When Given Id is Not Empty.
@@ -28,7 +29,7 @@ namespace EmployeeManagement.Modules.EmployeeManagement.Command.Delete
                 }
                 else
                 {
-                    throw new Exception("Invalid Employee ID");
+                    throw new InvalidIDException();
                 }
             }
         }

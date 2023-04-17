@@ -2,6 +2,7 @@
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.ComponentModel.DataAnnotations;
+using static EmployeeManagement.Model.ExceptionModel;
 using static EmployeeManagement.Model.Globals;
 
 namespace EmployeeManagement.Modules.EmployeeManagement.Command.Update
@@ -24,25 +25,31 @@ namespace EmployeeManagement.Modules.EmployeeManagement.Command.Update
 
             public async Task<EntityResponse> Handle(UpdateEmployee command, CancellationToken cancellationToken)
             {
-                var employees = await _context.Employees.Where(a => a.EmpId == command.EmployeeId).FirstOrDefaultAsync();
+                var employees = await _context.Employees.Where(a => a.EmployeeId == command.EmployeeId).FirstOrDefaultAsync();
                 EntityResponse response=new EntityResponse();
                 //Updates Existing Employee Record 
-                if (employees != null)
+                try
                 {
-                    employees.FirstName = command.FirstName;
-                    employees.Lastname = command.Lastname;
-                    employees.Gender = command.Gender;
-                    employees.DOB = command.DOB;
-                    employees.Designation = command.Designation;
-                    response.ResponseId=await _context.SaveChangesAsync();
-                    response.AdditionalInfo = "1 Row Affected";
-                    response.AdditionalInfo = "Employee Details Are Updated";
-                    return response;
+                    if (employees != null)
+                    {
+                        employees.FirstName = command.FirstName;
+                        employees.Lastname = command.Lastname;
+                        employees.Gender = command.Gender;
+                        employees.DOB = command.DOB;
+                        employees.Designation = command.Designation;
+                        response.ResponseId = await _context.SaveChangesAsync();
+                        response.AdditionalInfo = "1 Row Affected";
+                        response.AdditionalInfo = "Employee Details Are Updated";
+                        return response;
+                    }
+                    else
+                    {
+                        throw new Exception("Invalid  Employee ID");
+                    }
                 }
-                else
+                catch (Exception ex)
                 {
-                    throw new Exception("Invalid  Employee ID");
-
+                    throw new InvalidIDException();
                 }
 
             }

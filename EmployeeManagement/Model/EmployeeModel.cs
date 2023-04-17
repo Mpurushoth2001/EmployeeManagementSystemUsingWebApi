@@ -7,7 +7,7 @@ namespace EmployeeManagement.Model
     public class EmployeeModel
     {
         [Key]
-        public int EmpId { get; set; }
+        public int EmployeeId { get; set; }
         public string FirstName { get; set; }
         
         [Display(Name ="Last Name")]

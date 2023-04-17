@@ -1,4 +1,5 @@
 using EmployeeManagement.Behaviour;
+using EmployeeManagement.Configurations;
 using EmployeeManagement.Model;
 using FluentValidation;
 using FluentValidation.AspNetCore;
@@ -40,6 +41,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.AddGlobalErrorHandler();
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

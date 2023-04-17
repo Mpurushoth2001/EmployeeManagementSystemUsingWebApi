@@ -1,17 +1,27 @@
-﻿namespace EmployeeManagement.Model
+﻿using Azure;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Serilog;
+using System.Web.Http.Filters;
+using ExceptionFilterAttribute = System.Web.Http.Filters.ExceptionFilterAttribute;
+
+namespace EmployeeManagement.Model
 {
     public class ExceptionModel
     {
-        public int Code { get; set; }
-        public string Information { get; set; }
         //[Serializable]
         public class EmployeeNotFoundException : Exception
-        {            
-            public EmployeeNotFoundException() : base(string.Format("Employee Table is Empty")) {  }
-            //public EmployeeNotFoundException(int code) : base(string.Format("Employee Table is Empty")) { }
+        {
 
-            public int code { get { return 404; } }
-            public string Information { get { return "Employee Table is Empty"; } }
+            public EmployeeNotFoundException() : base(message: "Employee Table is Empty") { }
+
+            public override string StackTrace { get { return ""; } }
         }
+        public class InvalidIDException : Exception
+        {
+            public InvalidIDException() : base(message: "Invalid Employee ID") { }
+            public override string StackTrace { get { return string.Empty; } }
+        }
+
     }
 }

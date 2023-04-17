@@ -6,8 +6,11 @@ using EmployeeManagement.Modules.EmployeeManagement.Query.Get;
 using EmployeeManagement.Modules.EmployeeManagement.Query.GetById;
 using MediatR;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Net;
+using static EmployeeManagement.Model.ExceptionModel;
 
 namespace EmployeeManagement.Controllers
 {
@@ -18,17 +21,20 @@ namespace EmployeeManagement.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly IMediator _mediator;
-        public EmployeeController(IMediator mediator)=>_mediator=mediator;
+        public EmployeeController(IMediator mediator) => _mediator = mediator;
         /// <summary>
         /// Employee Create
         /// </summary>
         /// <param name="Create"></param>
         /// <returns></returns>
         [HttpPost]
-        public async Task<EntityResponse> CreateNewEmployee(CreateEmployee Create) 
+        public async Task<EntityResponse> CreateNewEmployee(CreateEmployee Create)
         {
+
             var result = await _mediator.Send(Create);
+            HttpContext.Response.Clear();
             return result;
+
         }
 
         /// <summary>
@@ -41,7 +47,7 @@ namespace EmployeeManagement.Controllers
 
         public async Task<EntityResponse> UpdateEmployeeRecord(UpdateEmployee update)
         {
-            var result=await _mediator.Send(update);
+            var result = await _mediator.Send(update);
             return result;
         }
 
@@ -50,11 +56,11 @@ namespace EmployeeManagement.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        
+
         [HttpDelete]
         public async Task<EntityResponse> DeleteEmployeeRecord(int ID)
         {
-            var result=await _mediator.Send(new DeleteEmployee { EmployeeId =ID});
+            var result = await _mediator.Send(new DeleteEmployee { EmployeeId = ID });
             return result;
         }
 
@@ -66,8 +72,26 @@ namespace EmployeeManagement.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllEmployeeRecords()
         {
+            HttpContext.Response.Clear();
             return Ok(await _mediator.Send(new GetEmployee()));
         }
+        #region
+        //public async Task<IHttpActionResult> GetAllEmployeeRecords()
+        //{
+        //    try
+        //    {
+        //        return (IHttpActionResult)Ok(await _mediator.Send(new GetEmployee()));
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        throw new HttpResponseException(new HttpResponseMessage(System.Net.HttpStatusCode.InternalServerError)
+        //        {
+        //            Content = new StringContent(ex.Message)
+        //        });
+        //    }
+        //}
+        #endregion
+
 
         /// <summary>
         /// Get An Employee Record By Mentioning ID
@@ -76,10 +100,10 @@ namespace EmployeeManagement.Controllers
         /// <returns></returns>
 
         [HttpGet("{id}")]
-        
+
         public async Task<IActionResult> GetByEmployeeID(int ID)
         {
-            return Ok(await _mediator.Send(new GetEmployeeByID {EmpID=ID}));
+            return Ok(await _mediator.Send(new GetEmployeeByID { EmployeeId = ID }));
         }
     }
 }
