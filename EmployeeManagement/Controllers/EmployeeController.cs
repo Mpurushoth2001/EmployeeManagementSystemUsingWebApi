@@ -1,16 +1,12 @@
-﻿using EmployeeManagement.Model;
+﻿using EmployeeManagement.Model.ResponseModel;
 using EmployeeManagement.Modules.EmployeeManagement.Command.Create;
 using EmployeeManagement.Modules.EmployeeManagement.Command.Delete;
 using EmployeeManagement.Modules.EmployeeManagement.Command.Update;
 using EmployeeManagement.Modules.EmployeeManagement.Query.Get;
 using EmployeeManagement.Modules.EmployeeManagement.Query.GetById;
 using MediatR;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
-using System.Net;
-using static EmployeeManagement.Model.ExceptionModel;
 
 namespace EmployeeManagement.Controllers
 {
@@ -22,12 +18,17 @@ namespace EmployeeManagement.Controllers
     {
         private readonly IMediator _mediator;
         public EmployeeController(IMediator mediator) => _mediator = mediator;
+
+
+
         /// <summary>
         /// Employee Create
         /// </summary>
         /// <param name="Create"></param>
-        /// <returns></returns>
+        /// <returns>Employee Record Creation</returns>
         [HttpPost]
+        [SwaggerResponse(StatusCodes.Status200OK)]
+        [SwaggerResponse(StatusCodes.Status400BadRequest)]
         public async Task<EntityResponse> CreateNewEmployee(CreateEmployee Create)
         {
 
@@ -70,6 +71,8 @@ namespace EmployeeManagement.Controllers
         /// <returns></returns>
 
         [HttpGet]
+        [SwaggerResponse(StatusCodes.Status200OK)]
+        [SwaggerResponse(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAllEmployeeRecords()
         {
             HttpContext.Response.Clear();

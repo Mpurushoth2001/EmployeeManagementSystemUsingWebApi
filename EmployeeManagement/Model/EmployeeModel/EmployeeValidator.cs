@@ -1,8 +1,7 @@
 ﻿using EmployeeManagement.Validator;
 using FluentValidation;
-using System.Text.RegularExpressions;
 
-namespace EmployeeManagement.Model
+namespace EmployeeManagement.Model.EmployeeModel
 {
 
     public class EmployeeValidator : AbstractValidator<EmployeeModel>

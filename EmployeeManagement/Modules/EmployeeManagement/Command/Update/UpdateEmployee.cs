@@ -1,9 +1,9 @@
-﻿using EmployeeManagement.Model;
+﻿using EmployeeManagement.Model.EmployeeModel;
+using EmployeeManagement.Model.ResponseModel;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using System.ComponentModel.DataAnnotations;
-using static EmployeeManagement.Model.ExceptionModel;
-using static EmployeeManagement.Model.Globals;
+using Serilog;
+using static EmployeeManagement.Model.ResponseModel.ExceptionModel;
 
 namespace EmployeeManagement.Modules.EmployeeManagement.Command.Update
 {
@@ -44,11 +44,13 @@ namespace EmployeeManagement.Modules.EmployeeManagement.Command.Update
                     }
                     else
                     {
-                        throw new Exception("Invalid  Employee ID");
+                        throw new Exception();
                     }
+                    
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
+                    Log.Error("Employee Record Not Found");
                     throw new InvalidIDException();
                 }
 

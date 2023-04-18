@@ -1,6 +1,6 @@
 ﻿using System.Net;
 using System.Text.Json;
-using static EmployeeManagement.Model.ExceptionModel;
+using static EmployeeManagement.Model.ResponseModel.ExceptionModel;
 
 namespace EmployeeManagement.Configurations
 {
@@ -36,7 +36,7 @@ namespace EmployeeManagement.Configurations
             if (exceptionType == typeof(EmployeeNotFoundException))
             {
                 message = exception.Message;
-                status = HttpStatusCode.BadRequest;
+                status = HttpStatusCode.OK;
                 //stackTrace = exception.StackTrace;
             }
             else if (exceptionType == typeof(InvalidIDException))
@@ -52,7 +52,7 @@ namespace EmployeeManagement.Configurations
                 //stackTrace = exception.StackTrace;
             }
 
-            var exceptionResult = JsonSerializer.Serialize(new { ErrorMessage = message });
+            var exceptionResult = JsonSerializer.Serialize(new { ErrorMessage = message});
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)status;
 

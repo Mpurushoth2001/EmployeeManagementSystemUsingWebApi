@@ -1,4 +1,4 @@
-﻿namespace EmployeeManagement.Model
+﻿namespace EmployeeManagement.Model.ResponseModel
 {
     public class EntityResponse
     {

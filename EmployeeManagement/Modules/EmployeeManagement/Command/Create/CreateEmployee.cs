@@ -1,8 +1,6 @@
-﻿using Azure;
-using EmployeeManagement.Model;
+﻿using EmployeeManagement.Model.EmployeeModel;
+using EmployeeManagement.Model.ResponseModel;
 using MediatR;
-using System.ComponentModel.DataAnnotations;
-using static EmployeeManagement.Model.Globals;
 
 namespace EmployeeManagement.Modules.EmployeeManagement.Command.Create
 {
@@ -27,7 +25,8 @@ namespace EmployeeManagement.Modules.EmployeeManagement.Command.Create
             {
                 EntityResponse response = new EntityResponse();
                 try
-                {                    
+                {      
+                    
                     var employees = new EmployeeModel();
                     employees.FirstName = command.FirstName;
                     employees.Lastname = command.Lastname;
@@ -38,9 +37,8 @@ namespace EmployeeManagement.Modules.EmployeeManagement.Command.Create
                     await _context.SaveChangesAsync();
                     response.ResponseId = employees.EmployeeId;
                     response.AdditionalInfo= "New Employee Details Added Successfully";
-                    return response;
                 }
-                catch (NullReferenceException e)
+                catch (Exception)
                 {
                     response.AdditionalInfo = "Invalid Entity";
                 }

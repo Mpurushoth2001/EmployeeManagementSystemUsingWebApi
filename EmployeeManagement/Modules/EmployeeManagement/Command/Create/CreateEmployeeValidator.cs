@@ -1,6 +1,5 @@
 ﻿using EmployeeManagement.Validator;
 using FluentValidation;
-using System.Text.RegularExpressions;
 
 namespace EmployeeManagement.Modules.EmployeeManagement.Command.Create
 {

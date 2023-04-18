@@ -1,7 +1,6 @@
-﻿using EmployeeManagement.Model;
+﻿using EmployeeManagement.Model.EmployeeModel;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
-using static EmployeeManagement.Model.ExceptionModel;
+using static EmployeeManagement.Model.ResponseModel.ExceptionModel;
 
 namespace EmployeeManagement.Modules.EmployeeManagement.Query.GetById
 {

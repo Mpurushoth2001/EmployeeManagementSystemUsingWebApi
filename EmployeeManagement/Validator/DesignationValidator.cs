@@ -1,5 +1,4 @@
 ﻿using FluentValidation.Validators;
-using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage;
 using System.Text.RegularExpressions;
 
 namespace EmployeeManagement.Validator
