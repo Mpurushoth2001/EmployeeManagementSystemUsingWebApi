@@ -14,7 +14,7 @@ namespace EmployeeManagement.Validator
             int dobYear = date.Year;
             if (context.PropertyValue!=null)
             {
-                if (dobYear <= currentYear && dobYear > currentYear - 60)
+                if (dobYear <= currentYear && dobYear > currentYear - 60 && dobYear!=currentYear)
                 {
                     return true;
                 }

@@ -7,7 +7,7 @@ namespace EmployeeManagement.Modules.EmployeeManagement.Command.Update
     {
         public UpdateEmployeeValidator()
         {
-            RuleFor(x => x.EmployeeId).NotEmpty().NotNull().OverridePropertyName("Employee ID");
+            RuleFor(x => x.EmployeeId).NotEmpty().NotNull().GreaterThan(0);
 
             RuleFor(x => x.FirstName).Cascade(CascadeMode.StopOnFirstFailure)
                  .NotEmpty().WithMessage("{PropertyName} is empty")
@@ -27,7 +27,7 @@ namespace EmployeeManagement.Modules.EmployeeManagement.Command.Update
             RuleFor(x => x.Designation).Cascade(CascadeMode.StopOnFirstFailure)
                 .NotEmpty().WithMessage("The Field is empty")
                 .Length(3, 25)
-                .SetValidator(new NameValidator());
+                .SetValidator(new DesignationValidator());
 
         }
         

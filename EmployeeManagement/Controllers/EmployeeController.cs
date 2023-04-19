@@ -41,27 +41,27 @@ namespace EmployeeManagement.Controllers
         /// <summary>
         /// Employee Update
         /// </summary>
-        /// <param name="update"></param>
+        /// <param name="Update"></param>
         /// <returns></returns>
 
         [HttpPut]
 
-        public async Task<EntityResponse> UpdateEmployeeRecord(UpdateEmployee update)
+        public async Task<EntityResponse> UpdateEmployeeRecord(UpdateEmployee Update)
         {
-            var result = await _mediator.Send(update);
+            var result = await _mediator.Send(Update);
             return result;
         }
 
         /// <summary>
         /// Employee Delete by Employee ID
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="Delete"></param>
         /// <returns></returns>
 
         [HttpDelete]
-        public async Task<EntityResponse> DeleteEmployeeRecord(int ID)
+        public async Task<EntityResponse> DeleteEmployeeRecord(DeleteEmployee Delete)
         {
-            var result = await _mediator.Send(new DeleteEmployee { EmployeeId = ID });
+            var result = await _mediator.Send(Delete);
             return result;
         }
 
@@ -99,14 +99,14 @@ namespace EmployeeManagement.Controllers
         /// <summary>
         /// Get An Employee Record By Mentioning ID
         /// </summary>
-        /// <param name="ID"></param>
+        /// <param name="GetEmployeeByID"></param>
         /// <returns></returns>
 
         [HttpGet("{id}")]
 
-        public async Task<IActionResult> GetByEmployeeID(int ID)
+        public async Task<IActionResult> GetByEmployeeID(GetEmployeeByID GetEmployeeByID)
         {
-            return Ok(await _mediator.Send(new GetEmployeeByID { EmployeeId = ID }));
+            return Ok(await _mediator.Send(GetEmployeeByID));
         }
     }
 }

@@ -52,7 +52,7 @@ namespace EmployeeManagement.Configurations
                 //stackTrace = exception.StackTrace;
             }
 
-            var exceptionResult = JsonSerializer.Serialize(new { ErrorMessage = message});
+            var exceptionResult = JsonSerializer.Serialize(new { ErrorMessage = message });
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)status;
 

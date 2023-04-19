@@ -1,6 +1,7 @@
 ﻿using EmployeeManagement.Model.EmployeeModel;
 using EmployeeManagement.Model.ResponseModel;
 using MediatR;
+using static EmployeeManagement.Model.ResponseModel.ExceptionModel;
 
 namespace EmployeeManagement.Modules.EmployeeManagement.Command.Create
 {
@@ -25,7 +26,8 @@ namespace EmployeeManagement.Modules.EmployeeManagement.Command.Create
             {
                 EntityResponse response = new EntityResponse();
                 try
-                {      
+                {     
+                    
                     
                     var employees = new EmployeeModel();
                     employees.FirstName = command.FirstName;
@@ -40,7 +42,8 @@ namespace EmployeeManagement.Modules.EmployeeManagement.Command.Create
                 }
                 catch (Exception)
                 {
-                    response.AdditionalInfo = "Invalid Entity";
+                    //response.AdditionalInfo = "Invalid Entity";
+                    throw new NullReferenceException("Invalid Entity");
                 }
                 return response; 
             }
