@@ -5,7 +5,7 @@ namespace EmployeeManagement.Validator
 {
     public class DesignationValidator:PropertyValidator
     {
-        public DesignationValidator():base("Special Characters and Digits are Not Valid")
+        public DesignationValidator():base("Invalid Designation")
         { }
         protected override bool IsValid(PropertyValidatorContext context)
         {

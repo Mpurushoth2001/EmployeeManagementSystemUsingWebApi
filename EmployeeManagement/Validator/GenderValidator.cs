@@ -4,7 +4,7 @@ namespace EmployeeManagement.Validator
 {
     public class GenderValidator : PropertyValidator
     {
-        public GenderValidator() : base("Invalid Entity")
+        public GenderValidator() : base("Invalid Gender")
         {
         }
         protected override bool IsValid(PropertyValidatorContext context)

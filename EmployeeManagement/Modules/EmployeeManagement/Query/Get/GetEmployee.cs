@@ -14,25 +14,15 @@ namespace EmployeeManagement.Modules.EmployeeManagement.Query.Get
             public async Task<List<EmployeeModel>> Handle(GetEmployee query, CancellationToken cancellationToken)
             {
                 var employee = await _context.Employees.ToListAsync();
-                //Fetch Employee Details If Employee Table(Database) Is Not Empty.
-                try
-                {
-                    if (employee.Count != 0)
-                    {
-                        return employee;
-                    }
-                    else
-                    {
-                        //return exception;
-                        //throw new EmployeeNotFoundException();
-                        //throw new EmployeeNotFoundException(500);
-                        throw new Exception();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    throw new EmployeeNotFoundException();
 
+                //Fetch Employee Details If Employee Table(Database) Is Not Empty.
+                if (employee.Count != 0)
+                {
+                    return employee;
+                }
+                else
+                {
+                    throw new NoDataFoundException();
                 }
             }
         }

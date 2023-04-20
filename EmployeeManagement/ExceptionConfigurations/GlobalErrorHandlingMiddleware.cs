@@ -33,7 +33,7 @@ namespace EmployeeManagement.Configurations
 
             var exceptionType = exception.GetType();
 
-            if (exceptionType == typeof(EmployeeNotFoundException))
+            if (exceptionType == typeof(NoDataFoundException))
             {
                 message = exception.Message;
                 status = HttpStatusCode.OK;
@@ -52,7 +52,7 @@ namespace EmployeeManagement.Configurations
                 //stackTrace = exception.StackTrace;
             }
 
-            var exceptionResult = JsonSerializer.Serialize(new { ErrorMessage = message });
+            var exceptionResult = JsonSerializer.Serialize(new { Information = message });
             context.Response.ContentType = "application/json";
             context.Response.StatusCode = (int)status;
 

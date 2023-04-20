@@ -18,12 +18,11 @@ namespace EmployeeManagement.Modules.EmployeeManagement.Command.Delete
                 var employees = await _context.Employees.Where(a => a.EmployeeId == command.EmployeeId).FirstOrDefaultAsync();
                 EntityResponse response=new EntityResponse();
 
-                //Delete Employee Record When Given Id is Not Empty.
+                //Delete Employee Record if Exists 
                 if (employees != null) 
                 {
                     _context.Employees.Remove(employees);
                     response.ResponseId = await _context.SaveChangesAsync();
-                    response.AdditionalInfo = "1 Row Affected";
                     response.AdditionalInfo = "Employee Record is Deleted";
                     return response;
                 }

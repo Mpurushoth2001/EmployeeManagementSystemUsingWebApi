@@ -1,9 +1,7 @@
 ﻿using EmployeeManagement.Model.EmployeeModel;
-using EmployeeManagement.Model.ResponseModel;
 using EmployeeManagement.Modules.EmployeeManagement.Command.Create;
 using EntityFrameworkCoreMock;
 using Microsoft.EntityFrameworkCore;
-using Moq;
 using static EmployeeManagement.Modules.EmployeeManagement.Command.Create.CreateEmployee;
 
 namespace EmployeeManagementXunitTest.Unit_Test.Modules.EmployeeManagement.Command.Create
@@ -25,18 +23,17 @@ namespace EmployeeManagementXunitTest.Unit_Test.Modules.EmployeeManagement.Comma
         public void PassValidation()
         {
             var request = new CreateEmployee() { FirstName="Vishnu",Lastname="Palani",Designation="Developer",DOB=Convert.ToDateTime("2001/10/23"),Gender='M'};
+            dbContextMock.Setup(x => x.SaveChangesAsync(CancellationToken.None)).Returns(() => Task.Run(() => { return 1; })).Verifiable();
             var response= handler.Handle(request , CancellationToken.None);
-            dbContextMock.Setup(x => x.SaveChangesAsync(CancellationToken.None)).Returns(() => Task.Run (() => { return 1; })).Verifiable();
-            Assert.True(response.Result.ResponseId !=null);
-            //Assert.NotNull(response.Result.ResponseId);
-        }
+            Assert.True(response.Result.ResponseId ==1);
+                    }
         [Fact]
-        public void Excption()
+        public void FailsOnInvalidDetails()
         {
-            var request = new CreateEmployee() { };
-            var response = Record.ExceptionAsync(async () => await handler.Handle(request, CancellationToken.None));
-            Assert.IsType<NullReferenceException>(response.Result);
+            var request = new CreateEmployee() { FirstName = "Vis3hnu", Lastname = "Palani", Designation = "Developer", DOB = Convert.ToDateTime("1938/10/23"), Gender = 'M' };
+            dbContextMock.Setup(x => x.SaveChangesAsync(CancellationToken.None)).Returns(() => Task.Run(() => { return 0; })).Verifiable();
+            var response = handler.Handle(request, CancellationToken.None);
+            Assert.True(response.Result.ResponseId == 0);
         }
-
     }
 }

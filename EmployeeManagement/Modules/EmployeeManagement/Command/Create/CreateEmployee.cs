@@ -9,15 +9,11 @@ namespace EmployeeManagement.Modules.EmployeeManagement.Command.Create
     {
         public string FirstName { get; set; }
         public string Lastname { get; set; }
-        public char  Gender{ get; set; }
+        public char Gender { get; set; }
         public DateTime DOB { get; set; }
         public string Designation { get; set; }
-        //public enum _Gender
-        //{
-        //    M,
-        //    F
-        //};
-        
+
+
         public class CreateEmployeeHandler : IRequestHandler<CreateEmployee, EntityResponse>
         {
             private readonly EmployeeDbcontext _context;
@@ -25,27 +21,19 @@ namespace EmployeeManagement.Modules.EmployeeManagement.Command.Create
             public async Task<EntityResponse> Handle(CreateEmployee command, CancellationToken cancellationToken)
             {
                 EntityResponse response = new EntityResponse();
-                try
-                {     
-                    
-                    
-                    var employees = new EmployeeModel();
-                    employees.FirstName = command.FirstName;
-                    employees.Lastname = command.Lastname;
-                    employees.Gender = command.Gender;
-                    employees.DOB = command.DOB;
-                    employees.Designation = command.Designation;
-                    _context.Employees.Add(employees);
-                    await _context.SaveChangesAsync();
-                    response.ResponseId = employees.EmployeeId;
-                    response.AdditionalInfo= "New Employee Details Added Successfully";
-                }
-                catch (Exception)
-                {
-                    //response.AdditionalInfo = "Invalid Entity";
-                    throw new NullReferenceException("Invalid Entity");
-                }
-                return response; 
+
+                var employees = new EmployeeModel();
+                employees.FirstName = command.FirstName;
+                employees.Lastname = command.Lastname;
+                employees.Gender = command.Gender;
+                employees.DOB = command.DOB;
+                employees.Designation = command.Designation;
+                _context.Employees.Add(employees);
+
+                response.ResponseId = await _context.SaveChangesAsync();
+                response.AdditionalInfo = "New Employee Details Added Successfully" +
+                "Your Employee ID is " + employees.EmployeeId;
+                return response;
             }
         }
     }

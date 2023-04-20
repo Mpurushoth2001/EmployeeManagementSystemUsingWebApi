@@ -2,7 +2,6 @@
 using EmployeeManagement.Model.ResponseModel;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Serilog;
 using static EmployeeManagement.Model.ResponseModel.ExceptionModel;
 
 namespace EmployeeManagement.Modules.EmployeeManagement.Command.Update
@@ -16,8 +15,6 @@ namespace EmployeeManagement.Modules.EmployeeManagement.Command.Update
         public DateTime DOB { get; set; }
         public string Designation { get; set; }
 
-        
-
         public class UpdateEmployeeHandler : IRequestHandler<UpdateEmployee, EntityResponse>
         {
             private readonly EmployeeDbcontext _context;
@@ -26,34 +23,25 @@ namespace EmployeeManagement.Modules.EmployeeManagement.Command.Update
             public async Task<EntityResponse> Handle(UpdateEmployee command, CancellationToken cancellationToken)
             {
                 var employees = await _context.Employees.Where(a => a.EmployeeId == command.EmployeeId).FirstOrDefaultAsync();
-                EntityResponse response=new EntityResponse();
+                EntityResponse response = new EntityResponse();
+                
                 //Updates Existing Employee Record 
-                try
+
+                if (employees != null)
                 {
-                    if (employees != null)
-                    {
-                        employees.FirstName = command.FirstName;
-                        employees.Lastname = command.Lastname;
-                        employees.Gender = command.Gender;
-                        employees.DOB = command.DOB;
-                        employees.Designation = command.Designation;
-                        response.ResponseId = await _context.SaveChangesAsync();
-                        response.AdditionalInfo = "1 Row Affected";
-                        response.AdditionalInfo = "Employee Details Are Updated";
-                        return response;
-                    }
-                    else
-                    {
-                        throw new Exception();
-                    }
-                    
+                    employees.FirstName = command.FirstName;
+                    employees.Lastname = command.Lastname;
+                    employees.Gender = command.Gender;
+                    employees.DOB = command.DOB;
+                    employees.Designation = command.Designation;
+                    response.ResponseId = await _context.SaveChangesAsync();
+                    response.AdditionalInfo = "Employee Details Are Updated";
+                    return response;
                 }
-                catch (Exception)
+                else
                 {
-                    Log.Error("Employee Record Not Found");
                     throw new InvalidIDException();
                 }
-
             }
         }
     }
