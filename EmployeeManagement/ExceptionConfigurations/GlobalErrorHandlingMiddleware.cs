@@ -39,7 +39,7 @@ namespace EmployeeManagement.Configurations
                 status = HttpStatusCode.OK;
                 //stackTrace = exception.StackTrace;
             }
-            else if (exceptionType == typeof(InvalidIDException))
+            else if (exceptionType == typeof(EmployeeIDNotFoundException))
             {
                 message = exception.Message;
                 status = HttpStatusCode.NotFound;

@@ -28,7 +28,7 @@ namespace EmployeeManagement.Modules.EmployeeManagement.Command.Delete
                 }
                 else
                 {
-                    throw new InvalidIDException();
+                    throw new EmployeeIDNotFoundException();
                 }
             }
         }

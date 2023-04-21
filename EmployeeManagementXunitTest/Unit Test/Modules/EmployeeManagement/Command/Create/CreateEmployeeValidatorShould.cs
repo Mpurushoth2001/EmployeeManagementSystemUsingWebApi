@@ -31,7 +31,7 @@ namespace EmployeeManagement.Unit_Test.Modules.EmployeeManagement.Command.Create
             validator.ShouldHaveValidationErrorFor(x => x.FirstName, request);
         }
         [Fact]
-        public void ValidFirstName()
+        public void PassOnValidFirstName()
         {
             var request = new CreateEmployee() { FirstName = "FirstName" };
             validator.ShouldNotHaveValidationErrorFor(x => x.FirstName, request);
@@ -46,7 +46,7 @@ namespace EmployeeManagement.Unit_Test.Modules.EmployeeManagement.Command.Create
             validator.ShouldHaveValidationErrorFor(x => x.Lastname, request);
         }
         [Fact]
-        public void ValidLastName()
+        public void PassOnValidLastName()
         {
             var request = new CreateEmployee() { Lastname = "LastName" };
             validator.ShouldNotHaveValidationErrorFor(x => x.Lastname, request);
@@ -67,7 +67,7 @@ namespace EmployeeManagement.Unit_Test.Modules.EmployeeManagement.Command.Create
             validator.ShouldHaveValidationErrorFor(x => x.Gender, request);
         }
         [Fact]
-        public void ValidGender()
+        public void PassOnValidGender()
         {
             var request = new CreateEmployee() { Gender = 'M' };
             validator.ShouldNotHaveValidationErrorFor(x => x.Gender, request);
@@ -94,7 +94,7 @@ namespace EmployeeManagement.Unit_Test.Modules.EmployeeManagement.Command.Create
             validator.ShouldHaveValidationErrorFor(x => x.DOB, request);
         }
         [Fact]
-        public void ValidDOB()
+        public void PassOnValidDOB()
         {
             var request = new CreateEmployee() { DOB = Convert.ToDateTime("2001/10/23") };
             validator.ShouldNotHaveValidationErrorFor(x => x.DOB, request);
@@ -121,7 +121,7 @@ namespace EmployeeManagement.Unit_Test.Modules.EmployeeManagement.Command.Create
             validator.ShouldHaveValidationErrorFor(x => x.Designation, request);
         }
         [Fact]
-        public void ValidDesignation()
+        public void PassOnValidDesignation()
         {
             var request = new CreateEmployee() { Designation = "Frontend Developer" };
             validator.ShouldNotHaveValidationErrorFor(x => x.Designation, request);

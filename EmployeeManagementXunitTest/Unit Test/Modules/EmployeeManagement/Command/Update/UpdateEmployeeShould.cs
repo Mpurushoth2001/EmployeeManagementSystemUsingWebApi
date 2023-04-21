@@ -33,7 +33,7 @@ namespace EmployeeManagementXunitTest.Unit_Test.Modules.EmployeeManagement.Comma
         {
             var request = new UpdateEmployee() { EmployeeId = 2,FirstName="Anu",Lastname="John",Designation="Developer",DOB=Convert.ToDateTime("2000/10/26"),Gender='F' };
             var response = Record.ExceptionAsync(async () => await handler.Handle(request, CancellationToken.None));
-            Assert.IsType<ExceptionModel.InvalidIDException>(response.Result);
+            Assert.IsType<ExceptionModel.EmployeeIDNotFoundException>(response.Result);
         }
     }
 }

@@ -29,9 +29,8 @@ namespace EmployeeManagement.Modules.EmployeeManagement.Command.Create
                 employees.DOB = command.DOB;
                 employees.Designation = command.Designation;
                 _context.Employees.Add(employees);
-
                 response.ResponseId = await _context.SaveChangesAsync();
-                response.AdditionalInfo = "New Employee Details Added Successfully" +
+                response.AdditionalInfo = "New Employee Details Added Successfully " +
                 "Your Employee ID is " + employees.EmployeeId;
                 return response;
             }

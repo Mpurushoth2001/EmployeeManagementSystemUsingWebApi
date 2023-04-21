@@ -23,7 +23,7 @@ namespace EmployeeManagement.Modules.EmployeeManagement.Query.GetById
                 }
                 else
                 {
-                    throw new InvalidIDException();
+                    throw new EmployeeIDNotFoundException();
                     
                 }
             }

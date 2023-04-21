@@ -32,7 +32,7 @@ namespace EmployeeManagementXunitTest.Unit_Test.Modules.EmployeeManagement.Comma
         {
             var request = new DeleteEmployee { EmployeeId = 2};//invalid Id
             var response = Record.ExceptionAsync(async () => await handler.Handle(request, CancellationToken.None));
-            Assert.IsType<ExceptionModel.InvalidIDException>(response.Result);
+            Assert.IsType<ExceptionModel.EmployeeIDNotFoundException>(response.Result);
         }
     }
 }

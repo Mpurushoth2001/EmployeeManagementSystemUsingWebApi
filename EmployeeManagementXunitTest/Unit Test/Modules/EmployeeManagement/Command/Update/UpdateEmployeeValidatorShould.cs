@@ -36,7 +36,7 @@ namespace EmployeeManagementXunitTest.Unit_Test.Modules.EmployeeManagement.Comma
             validator.ShouldHaveValidationErrorFor(x => x.EmployeeId, request);
         }
         [Fact]
-        public void ValidEmployeeId()
+        public void PassOnValidEmployeeId()
         {
             var request = new UpdateEmployee() { EmployeeId = 9 };
             validator.ShouldNotHaveValidationErrorFor(x => x.EmployeeId, request);
@@ -64,7 +64,7 @@ namespace EmployeeManagementXunitTest.Unit_Test.Modules.EmployeeManagement.Comma
             validator.ShouldHaveValidationErrorFor(x => x.FirstName, request);
         }
         [Fact]
-        public void ValidFirstName() 
+        public void PassOnValidFirstName() 
         {
             var request = new UpdateEmployee() { FirstName = "FirstName" };
             validator.ShouldNotHaveValidationErrorFor(x=>x.FirstName, request);
@@ -79,7 +79,7 @@ namespace EmployeeManagementXunitTest.Unit_Test.Modules.EmployeeManagement.Comma
             validator.ShouldHaveValidationErrorFor(x => x.Lastname, request);
         }
         [Fact]
-        public void ValidLastName()
+        public void PassOnValidLastName()
         {
             var request = new UpdateEmployee() { Lastname = "LastName" };
             validator.ShouldNotHaveValidationErrorFor(x => x.Lastname, request);
@@ -100,7 +100,7 @@ namespace EmployeeManagementXunitTest.Unit_Test.Modules.EmployeeManagement.Comma
             validator.ShouldHaveValidationErrorFor(x => x.Gender, request);
         }
         [Fact]
-        public void ValidGenderName()
+        public void PassOnValidGenderName()
         {
             var request = new UpdateEmployee() { Gender = 'M' };
             validator.ShouldNotHaveValidationErrorFor(x => x.Gender, request);
@@ -128,7 +128,7 @@ namespace EmployeeManagementXunitTest.Unit_Test.Modules.EmployeeManagement.Comma
             validator.ShouldHaveValidationErrorFor(x => x.DOB, request);
         }
         [Fact]
-        public void ValidDOB()
+        public void PassOnValidDOB()
         {
             var request = new UpdateEmployee() { DOB =Convert.ToDateTime("2001/10/23") };
             validator.ShouldNotHaveValidationErrorFor(x => x.DOB, request);
@@ -156,7 +156,7 @@ namespace EmployeeManagementXunitTest.Unit_Test.Modules.EmployeeManagement.Comma
             validator.ShouldHaveValidationErrorFor(x => x.Designation, request);
         }
         [Fact]
-        public void ValidDesignation()
+        public void PassOnValidDesignation()
         {
             var request = new UpdateEmployee() { Designation = "Frontend Developer" };
             validator.ShouldNotHaveValidationErrorFor(x => x.Designation, request);

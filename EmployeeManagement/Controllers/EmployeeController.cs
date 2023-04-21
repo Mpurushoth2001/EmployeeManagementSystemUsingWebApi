@@ -19,11 +19,16 @@ namespace EmployeeManagement.Controllers
         private readonly IMediator _mediator;
         public EmployeeController(IMediator mediator)=>_mediator = mediator;
 
+        #region Command
 
         /// <summary>
         /// Used to Create New Employee
         /// </summary>
         /// <remarks>
+        /// 
+        /// Example Value
+        /// ------- -----
+        /// 
         /// {
         /// 
         ///     "FirstName":"Vishnu",
@@ -41,13 +46,11 @@ namespace EmployeeManagement.Controllers
         /// <param name="Create"></param>
         /// <returns>Employee Record Creation</returns>
         [HttpPost]
-        [SwaggerResponse(StatusCodes.Status200OK)]
-        [SwaggerResponse(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<EntityResponse> CreateNewEmployee(CreateEmployee Create)
         {
 
             var result = await _mediator.Send(Create);
-            HttpContext.Response.Clear();
             return result;
 
         }
@@ -56,6 +59,10 @@ namespace EmployeeManagement.Controllers
         /// Update Employee Details
         /// </summary>
         ///<remarks>
+        ///
+        /// Example Value
+        /// ------- -----
+        /// 
         ///{
         ///
         ///     "EmployeeID":2,
@@ -76,7 +83,8 @@ namespace EmployeeManagement.Controllers
         /// <returns></returns>
 
         [HttpPut]
-
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<EntityResponse> UpdateEmployeeRecord(UpdateEmployee Update)
         {
             var result = await _mediator.Send(Update);
@@ -87,6 +95,10 @@ namespace EmployeeManagement.Controllers
         /// Delete Employee Record by Employee ID
         /// </summary>
         /// <remarks>
+        /// 
+        /// Example Value
+        /// ------- -----
+        ///
         /// {
         /// 
         ///    "EmployeeID":2 
@@ -97,11 +109,16 @@ namespace EmployeeManagement.Controllers
         /// <returns></returns>
 
         [HttpDelete]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<EntityResponse> DeleteEmployeeRecord(DeleteEmployee Delete)
         {
             var result = await _mediator.Send(Delete);
             return result;
         }
+        #endregion
+
+
         #region Queries
         /// <summary>
         /// Get All The Employee Records
@@ -110,10 +127,8 @@ namespace EmployeeManagement.Controllers
 
         [HttpGet]
         [SwaggerResponse(StatusCodes.Status200OK)]
-        [SwaggerResponse(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> GetAllEmployeeRecords()
-        {
-            HttpContext.Response.Clear();
+        {            
             return Ok(await _mediator.Send(new GetEmployee()));
         }
 
@@ -121,19 +136,13 @@ namespace EmployeeManagement.Controllers
         /// <summary>
         /// Get An Employee Record By Employee ID
         /// </summary>
-        /// <remarks>
-        /// {
-        /// 
-        ///    "EmployeeID":2
-        ///    
-        /// }
-        /// </remarks>
         /// <param name="ID"></param>
         /// <returns></returns>
 
         [HttpGet]
         [Route("GetByEmployeeID")]
-
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetByEmployeeID(int ID)
         {
             return Ok(await _mediator.Send(new GetEmployeeByID { EmployeeId=ID}));

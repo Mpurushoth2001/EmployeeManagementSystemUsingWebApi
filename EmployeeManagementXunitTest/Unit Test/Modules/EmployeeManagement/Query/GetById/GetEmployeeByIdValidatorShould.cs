@@ -36,7 +36,7 @@ namespace EmployeeManagementXunitTest.Unit_Test.Modules.EmployeeManagement.Query
             validator.ShouldHaveValidationErrorFor(x => x.EmployeeId, request);
         }
         [Fact]
-        public void ValidEmployeeId()
+        public void PassOnValidEmployeeId()
         {
             var request = new GetEmployeeByID() { EmployeeId = 9 };
             validator.ShouldNotHaveValidationErrorFor(x => x.EmployeeId, request);

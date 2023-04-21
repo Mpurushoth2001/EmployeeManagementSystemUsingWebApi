@@ -31,7 +31,7 @@ namespace EmployeeManagementXunitTest.Unit_Test.Modules.EmployeeManagement.Query
         {
             var request = new GetEmployeeByID() { EmployeeId = 2 };
             var response = Record.ExceptionAsync(async () => await handler.Handle(request, CancellationToken.None));
-            Assert.IsType<ExceptionModel.InvalidIDException>(response.Result);
+            Assert.IsType<ExceptionModel.EmployeeIDNotFoundException>(response.Result);
         }
     }
 }

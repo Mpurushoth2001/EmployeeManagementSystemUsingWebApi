@@ -42,10 +42,6 @@ builder.Services.AddSwaggerGen(c => {
 builder.Services.AddApiVersioningConfigured();
 
 
-// Add a Swagger generator and Automatic Request and Response annotations:
-//builder.Services.AddSwaggerSwashbuckleConfigured();
-
-
 //Implementation of MediaTR
 builder.Services.AddMediatR(Assembly.GetExecutingAssembly());
 
@@ -86,6 +82,8 @@ if (app.Environment.IsDevelopment())
 
 //Implementation of Global Error Handling MiddleWare
 app.AddGlobalErrorHandler();
+
+
 app.UseHttpsRedirection();
 
 app.UseAuthorization();

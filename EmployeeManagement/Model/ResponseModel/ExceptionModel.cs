@@ -2,15 +2,15 @@
 {
     public class ExceptionModel
     {
-        //[Serializable]
+        
         public class    NoDataFoundException : Exception
         {
-            public NoDataFoundException() : base(message: "Employee Table is Empty") { }            
+            public NoDataFoundException() : base(message: "No Records Found") { }            
         }
 
-        public class InvalidIDException : Exception
+        public class EmployeeIDNotFoundException : Exception
         {
-            public InvalidIDException() : base(message: "Invalid Employee ID") { }
+            public EmployeeIDNotFoundException() : base(message: "Employee ID Not Found") { }
            
         }
     }

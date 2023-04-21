@@ -31,7 +31,7 @@ namespace EmployeeManagementXunitTest.Unit_Test.Modules.EmployeeManagement.Comma
             validator.ShouldHaveValidationErrorFor(x => x.EmployeeId, request);
         }
         [Fact]
-        public void ValidEmployeeId()
+        public void PassOnValidEmployeeId()
         {
             var request = new DeleteEmployee() { EmployeeId = 9 };
             validator.ShouldNotHaveValidationErrorFor(x => x.EmployeeId, request);

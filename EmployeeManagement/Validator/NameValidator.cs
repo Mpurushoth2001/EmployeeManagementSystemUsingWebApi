@@ -5,11 +5,14 @@ namespace EmployeeManagement.Validator
 {
     public class NameValidator : PropertyValidator
     {
-        public NameValidator() : base("{PropertyName} should be Letters") { }
+        public NameValidator() : base("Invalid {PropertyName}") { }
         protected override bool IsValid(PropertyValidatorContext contect)
         {
+            //Allows only Alphabets
             string name = (string)contect.PropertyValue;
             Regex regex = new Regex(@"^[a-z]+$", RegexOptions.IgnoreCase);
+            
+            //Checks The Value Is null
             if (contect.PropertyValue != null)
             {
                 return regex.IsMatch(name);
@@ -18,17 +21,6 @@ namespace EmployeeManagement.Validator
             {
                 return false;
             }
-
-            //string data = (string)contect.PropertyValue;
-            //if (contect.PropertyValue != null)
-            //{
-            //    return data.All(char.IsLetter);
-            //}
-            //else
-            //{
-            //    return false;
-            //}
-
         }
     }
 }

@@ -40,7 +40,7 @@ namespace EmployeeManagement.Modules.EmployeeManagement.Command.Update
                 }
                 else
                 {
-                    throw new InvalidIDException();
+                    throw new EmployeeIDNotFoundException();
                 }
             }
         }
