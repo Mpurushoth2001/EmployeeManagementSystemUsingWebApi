@@ -14,15 +14,8 @@ namespace EmployeeManagement.Validator
             string designation = (string)context.PropertyValue;
             Regex regex = new Regex(@"^[a-z\s]+$", RegexOptions.IgnoreCase);
 
-            //Checks The Value Is null
-            if (context.PropertyValue != null)
-            {
-                return regex.IsMatch(designation);
-            }
-            else
-            {
-                return false;
-            }
+            return regex.IsMatch(designation);
+            
         }
         
     }
