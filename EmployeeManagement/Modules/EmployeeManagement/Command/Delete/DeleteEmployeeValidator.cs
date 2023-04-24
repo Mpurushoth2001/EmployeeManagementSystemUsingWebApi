@@ -6,7 +6,10 @@ namespace EmployeeManagement.Modules.EmployeeManagement.Command.Delete
     {
         public DeleteEmployeeValidator()
         {
-            RuleFor(x => x.EmployeeId).NotEmpty().NotNull().GreaterThan(0);
+            RuleFor(x => x.EmployeeId).Cascade(CascadeMode.StopOnFirstFailure)
+                .NotEmpty()
+                .NotNull()
+                .GreaterThan(0);
         }
     }
 }

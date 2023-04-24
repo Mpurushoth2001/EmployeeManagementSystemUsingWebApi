@@ -6,7 +6,10 @@ namespace EmployeeManagement.Modules.EmployeeManagement.Query.GetById
     {
         public GetEmployeeByIdValidator()
         {
-            RuleFor(x => x.EmployeeId).NotNull().NotEmpty().GreaterThan(0);
+            RuleFor(x => x.EmployeeId).Cascade(CascadeMode.StopOnFirstFailure)
+                .NotNull()
+                .NotEmpty()
+                .GreaterThan(0);
         }
     }
 }
