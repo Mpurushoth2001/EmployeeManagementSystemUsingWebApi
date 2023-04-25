@@ -2,7 +2,7 @@
 using System.Text.Json;
 using static EmployeeManagement.Model.ResponseModel.ExceptionModel;
 
-namespace EmployeeManagement.Configurations
+namespace EmployeeManagement.Middleware.ExceptionMiddleware
 {
     public class GlobalErrorHandlingMiddleware
     {
@@ -58,5 +58,10 @@ namespace EmployeeManagement.Configurations
 
             return context.Response.WriteAsync(exceptionResult);
         }
+    }
+    public static class ApplicationBuilderExtensions
+    {
+        public static IApplicationBuilder AddGlobalErrorHandler(this IApplicationBuilder applicationBuilder)
+        => applicationBuilder.UseMiddleware<GlobalErrorHandlingMiddleware>();
     }
 }

@@ -18,16 +18,16 @@ namespace EmployeeManagementXunitTest.Unit_Test.Controllers.EmployeeController1
             employeecontrollermock = new EmployeeController(mediatormock.Object);            
         }
         [Theory]
-        [MemberData(nameof(TestDataProvider.CreateObject), MemberType = typeof(TestDataProvider))]
-        public async Task ReturnsCorrectResponse_DeleteNewEmployee(DeleteEmployee request)
+        [InlineData(1)]
+        public async Task ReturnsCorrectResponse_DeleteNewEmployee(int id)
         {
             #region Assign
             var response = new EntityResponse() { ResponseId = 1, AdditionalInfo = "Employee Details Deleted" };
-            mediatormock.Setup(x => x.Send(request, default)).ReturnsAsync(response);
+            mediatormock.Setup(x => x.Send(It.IsAny<DeleteEmployee>, default)).ReturnsAsync(response);
             #endregion
 
             #region Act
-            var result = await employeecontrollermock.DeleteEmployeeRecord(request);
+            var result = await employeecontrollermock.DeleteEmployeeRecord(id);
             #endregion
 
             #region Assert
@@ -36,16 +36,16 @@ namespace EmployeeManagementXunitTest.Unit_Test.Controllers.EmployeeController1
 
         }
         [Theory]
-        [MemberData(nameof(TestDataProvider.CreateObject), MemberType = typeof(TestDataProvider))]
-        public async Task ReturnsFailResponse_DeleteNewEmployee(DeleteEmployee request)
+        [InlineData(1)]
+        public async Task ReturnsFailResponse_DeleteNewEmployee(int id)
         {
             #region Assign
             var response = new EntityResponse() { ResponseId = 0 };
-            mediatormock.Setup(x => x.Send(request, default)).ReturnsAsync(response);
+            mediatormock.Setup(x => x.Send(It.IsAny<DeleteEmployee>, default)).ReturnsAsync(response);
             #endregion
 
             #region Act
-            var result = await employeecontrollermock.DeleteEmployeeRecord(request);
+            var result = await employeecontrollermock.DeleteEmployeeRecord(id);
             #endregion
 
             #region Assert

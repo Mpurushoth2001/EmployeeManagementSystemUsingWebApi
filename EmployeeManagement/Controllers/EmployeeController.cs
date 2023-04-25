@@ -5,11 +5,14 @@ using EmployeeManagement.Modules.EmployeeManagement.Command.Update;
 using EmployeeManagement.Modules.EmployeeManagement.Query.Get;
 using EmployeeManagement.Modules.EmployeeManagement.Query.GetById;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
+using System.Web.Http.Filters;
 
 namespace EmployeeManagement.Controllers
 {
+    
     [Route("[controller]")]
     [ApiController]
     [SwaggerTag]
@@ -105,15 +108,15 @@ namespace EmployeeManagement.Controllers
         ///    
         /// }
         /// </remarks>
-        /// <param name="Delete"></param>
+        /// <param name="ID"></param>
         /// <returns></returns>
 
         [HttpDelete]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<EntityResponse> DeleteEmployeeRecord(DeleteEmployee Delete)
+        public async Task<EntityResponse> DeleteEmployeeRecord(int ID)
         {
-            var result = await _mediator.Send(Delete);
+            var result = await _mediator.Send(new DeleteEmployee { EmployeeId=ID});
             return result;
         }
         #endregion

@@ -1,5 +1,6 @@
 using EmployeeManagement.Behaviour;
-using EmployeeManagement.Configurations;
+using EmployeeManagement.Middleware.AuthenticationMiddleware;
+using EmployeeManagement.Middleware.ExceptionMiddleware;
 using EmployeeManagement.Model.EmployeeModel;
 using EmployeeManagement.SwaggerConfig;
 using FluentValidation;
@@ -36,6 +37,7 @@ builder.Services.AddSwaggerGen(c => {
     var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
     c.IncludeXmlComments(xmlPath);
 });
+
 
 
 //configuration of ApiVersioning For Swagger Documentation
@@ -80,9 +82,10 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+app.UseMiddleware<BasicAuthorization>("Test");
+
 //Implementation of Global Error Handling MiddleWare
 app.AddGlobalErrorHandler();
-
 
 app.UseHttpsRedirection();
 
