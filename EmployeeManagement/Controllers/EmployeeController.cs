@@ -16,7 +16,7 @@ namespace EmployeeManagement.Controllers
     [Route("[controller]")]
     [ApiController]
     [SwaggerTag]
-    [ApiVersion("1")]
+    //[ApiVersion("1")]
     public class EmployeeController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -48,7 +48,9 @@ namespace EmployeeManagement.Controllers
         /// </remarks>
         /// <param name="Create"></param>
         /// <returns>Employee Record Creation</returns>
+        
         [HttpPost]
+        [Route("CreateEmployee")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<EntityResponse> CreateNewEmployee(CreateEmployee Create)
         {
@@ -129,6 +131,7 @@ namespace EmployeeManagement.Controllers
         /// <returns></returns>
 
         [HttpGet]
+        [Route("GetAllEmployees")]
         [SwaggerResponse(StatusCodes.Status200OK)]
         public async Task<IActionResult> GetAllEmployeeRecords()
         {            

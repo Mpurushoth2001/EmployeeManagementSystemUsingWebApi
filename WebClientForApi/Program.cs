@@ -57,7 +57,7 @@ namespace WebClientForApi
 
                     var json=Newtonsoft.Json.JsonConvert.SerializeObject(createdata);
                     var createcontent =new StringContent(json,Encoding.UTF8,"application/json");
-                    HttpResponseMessage responseMessage = await client.PostAsync("https://localhost:7127/Employee",createcontent);
+                    HttpResponseMessage responseMessage = await client.PostAsync("https://localhost:7127/Employee/CreateEmployee", createcontent);
                     if (responseMessage.IsSuccessStatusCode)
                     {
                         string result = await responseMessage.Content.ReadAsStringAsync();
@@ -131,7 +131,7 @@ namespace WebClientForApi
                 case 4:
                     
                     Console.WriteLine("\nFetch Employee Details :-\n");
-                    HttpResponseMessage httpResponse = await client.GetAsync("https://localhost:7127/Employee");
+                    HttpResponseMessage httpResponse = await client.GetAsync("https://localhost:7127/Employee/GetAllEmployees");
                     if (httpResponse.IsSuccessStatusCode)
                     {
                         string result = await httpResponse.Content.ReadAsStringAsync();

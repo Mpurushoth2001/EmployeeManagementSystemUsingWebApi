@@ -5,11 +5,9 @@ namespace EmployeeManagement.Middleware.AuthenticationMiddleware
     public class BasicAuthorization
     {
         private readonly RequestDelegate next;
-        private readonly string relm;
-        public BasicAuthorization(RequestDelegate Next,string Relm)
+        public BasicAuthorization(RequestDelegate Next)
         {
             next = Next;
-            relm = Relm;
         }
         public async Task Invoke(HttpContext context)
         {
